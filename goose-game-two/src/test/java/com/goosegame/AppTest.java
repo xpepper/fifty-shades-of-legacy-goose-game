@@ -48,13 +48,14 @@ public class AppTest {
         System.out.println(out);
         uuids.add(out.substring(8, 44));
 
-        String roll = null;
-        do {
+        vittoria:
+        while (true) {
             for (String uuid : uuids) {
                 when(req.params(anyString())).thenReturn(uuid);
-                roll = app.roll(req, res);
+                String roll = app.roll(req, res);
                 System.out.println(roll);
+                if (roll.contains("63")) break vittoria;
             }
-        } while(!roll.contains("63"));
+        }
     }
 }

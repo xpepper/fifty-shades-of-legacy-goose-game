@@ -99,8 +99,10 @@ public class App {
         startPosition = currentPlayer.getPosition();
         newPosition = currentPlayer.getPosition() + move;
         currentPlayer.setPosition(newPosition);
-        if(currentPlayer.getPosition()> 63)
+        String message = String.format("%s moves from %s to %s", currentPlayer.getName(), cellName(startPosition), cellName(newPosition));
+        if(currentPlayer.getPosition()> 63) {
             currentPlayer.setPosition(63 - (currentPlayer.getPosition() - 63));
+        }
         else if (currentPlayer.getPosition() == 6)
             currentPlayer.setPosition(currentPlayer.getPosition() + 6);
 
@@ -108,6 +110,10 @@ public class App {
             gameOver = true;
         }
 
-        return "{\"roll\":" + move + ", \"position\":" + newPosition + "}";
+        return "{\"roll\":" + move + ", \"position\":" + currentPlayer.getPosition() + ", \"message\": \"" + message + "\" }";
+    }
+
+    private String cellName(int startPosition) {
+        return startPosition == 0? "Partenza" : String.valueOf(startPosition);
     }
 }
