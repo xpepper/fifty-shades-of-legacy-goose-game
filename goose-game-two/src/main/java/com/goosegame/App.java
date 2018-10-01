@@ -99,18 +99,20 @@ public class App {
         startPosition = currentPlayer.getPosition();
         newPosition = currentPlayer.getPosition() + move;
         currentPlayer.setPosition(newPosition);
-        String message = String.format("%s moves from %s to %s", currentPlayer.getName(), cellName(startPosition), cellName(newPosition));
+        String message = String.format("%s moves from %s to %s. ", currentPlayer.getName(), cellName(startPosition), cellName(newPosition));
         if(currentPlayer.getPosition()> 63) {
             currentPlayer.setPosition(63 - (currentPlayer.getPosition() - 63));
+            message += String.format("%s bounced! %s goes back to %s", currentPlayer.getName(), currentPlayer.getName(), currentPlayer.getPosition());
         }
         else if (currentPlayer.getPosition() == 6)
             currentPlayer.setPosition(currentPlayer.getPosition() + 6);
 
         if (currentPlayer.getPosition() == 63) {
+            message += String.format("%s wins!", currentPlayer.getName());
             gameOver = true;
         }
 
-        return "{\"roll\":" + move + ", \"position\":" + currentPlayer.getPosition() + ", \"message\": \"" + message + "\" }";
+        return "{\"roll\":" + move + ", \"position\":" + currentPlayer.getPosition() + ", \"message\": \"" + message.trim() + "\" }";
     }
 
     private String cellName(int startPosition) {
