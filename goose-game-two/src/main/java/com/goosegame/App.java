@@ -105,9 +105,10 @@ public class App {
             currentPlayer.setPosition(63 - (currentPlayer.getPosition() - 63));
             message += String.format("%s bounced! %s goes back to %s", currentPlayer.getName(), currentPlayer.getName(), currentPlayer.getPosition());
         }
-        else if (currentPlayer.getPosition() == 6)
+        else if (currentPlayer.getPosition() == 6) {
             currentPlayer.setPosition(currentPlayer.getPosition() + 6);
-
+            message += String.format("%s jumps to %s", currentPlayer.getName(), currentPlayer.getPosition());
+        }
         if (currentPlayer.getPosition() == 63) {
             message += String.format("%s wins!", currentPlayer.getName());
             gameOver = true;
