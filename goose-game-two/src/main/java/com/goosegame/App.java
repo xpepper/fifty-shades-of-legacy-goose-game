@@ -93,11 +93,12 @@ public class App {
     }
 
     private String movePlayer(Player currentPlayer) {
-        int move = new Random().nextInt(5) + 1;
+        int firstThrow = thowDice();
+        int secondThrow = thowDice();
 
         int startPosition = 0, newPosition = 0;
         startPosition = currentPlayer.getPosition();
-        newPosition = currentPlayer.getPosition() + move;
+        newPosition = currentPlayer.getPosition() + firstThrow + secondThrow;
         currentPlayer.setPosition(newPosition);
         String message = String.format("%s moves from %s to %s. ", currentPlayer.getName(), cellName(startPosition), cellName(newPosition));
         if(currentPlayer.getPosition()> 63) {
@@ -112,7 +113,15 @@ public class App {
             gameOver = true;
         }
 
-        return "{\"roll\":" + move + ", \"position\":" + currentPlayer.getPosition() + ", \"message\": \"" + message.trim() + "\" }";
+        return "{\"roll\":" + printRoll(firstThrow, secondThrow) + ", \"position\":" + currentPlayer.getPosition() + ", \"message\": \"" + message.trim() + "\" }";
+    }
+
+    private String printRoll(int firstThrow, int secondThrow) {
+        return "[" +firstThrow + ", " + secondThrow + "]";
+    }
+
+    private int thowDice() {
+        return new Random().nextInt(5) + 1;
     }
 
     private String cellName(int startPosition) {
