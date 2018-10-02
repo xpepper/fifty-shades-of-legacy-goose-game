@@ -13,21 +13,20 @@ public class App {
     private Player nextPlayer = null;
 
     public String createPlayer(Request req, Response res) {
-        UUID value = UUID.randomUUID();
         JSONObject json = new Utils().fromJson(req.body());
-        String name = json.getString("name");
-        if (exist(name)) {
+        Player wannabePlayer = new Player(json);
+        if (exist(wannabePlayer)) {
             res.status(400);
-            return "{\"error\": \"name already taken: " + name + "\"}";
+            return "{\"error\": \"name already taken: " + wannabePlayer.getName() + "\"}";
         } else {
             if (!moreThanFourPlayer()) {
-                players.add(new Player(name, value)); // passare ad una versione che fa new Player(json) ?
+                players.add(wannabePlayer);
                 if (players.size() == 4)
                     nextPlayer = players.getFirst();
 
                 res.status(201);
                 res.type("application/json");
-                return "{\"id\": \"" + value + "\", \"name\": \"" + json.getString("name") + "\"}";
+                return "{\"id\": \"" + wannabePlayer.getUuid() + "\", \"name\": \"" + wannabePlayer.getName() + "\"}";
             } else {
                 res.status(400);
                 return "{\"error\": \"too many players already: " + printNames(players) + "\"}";
@@ -35,7 +34,7 @@ public class App {
         }
     }
 
-    private boolean exist(String name) {
+    private boolean exist(Player name) {
         for (Player p : players) {
             if (p.getName().equals(name)) {
                 return true;

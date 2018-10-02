@@ -1,5 +1,7 @@
 package com.goosegame;
 
+import org.json.JSONObject;
+
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.UUID;
@@ -8,6 +10,11 @@ public class Player {
     private final String name;
     private final UUID uuid;
     private int position = 0;
+
+    public Player(JSONObject json) {
+        this.name = json.getString("name");
+        this.uuid = UUID.randomUUID();
+    }
 
     public int getPosition() {
         return position;

@@ -28,22 +28,22 @@ public class AppTest {
 
         App app = new App();
 
-        when(req.body()).thenReturn("{ \"name\": \"rino\"}");
+        when(req.body()).thenReturn("{ \"name\": \"Paolo\"}");
         String out = app.createPlayer(req, res);
         System.out.println(out);
         uuids.add(out.substring(8, 44));
 
-        when(req.body()).thenReturn("{ \"name\": \"gino\"}");
+        when(req.body()).thenReturn("{ \"name\": \"Piero\"}");
         out = app.createPlayer(req, res);
         System.out.println(out);
         uuids.add(out.substring(8, 44));
 
-        when(req.body()).thenReturn("{ \"name\": \"tino\"}");
+        when(req.body()).thenReturn("{ \"name\": \"Ivo\"}");
         out = app.createPlayer(req, res);
         System.out.println(out);
         uuids.add(out.substring(8, 44));
 
-        when(req.body()).thenReturn("{ \"name\": \"pino\"}");
+        when(req.body()).thenReturn("{ \"name\": \"Manuela\"}");
         out = app.createPlayer(req, res);
         System.out.println(out);
         uuids.add(out.substring(8, 44));
