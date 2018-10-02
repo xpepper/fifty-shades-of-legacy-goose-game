@@ -4,10 +4,7 @@ import org.json.JSONObject;
 import spark.Request;
 import spark.Response;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class App {
@@ -102,6 +99,13 @@ public class App {
         newPosition = currentPlayer.getPosition() + firstThrow + secondThrow;
         currentPlayer.setPosition(newPosition);
         String message = String.format("%s moves from %s to %s. ", currentPlayer.getName(), cellName(startPosition), cellName(newPosition));
+
+        Optional<Player> playerInPosition = players.stream().filter(p -> p.getPosition() == currentPlayer.getPosition() && !p.getUuid().equals(currentPlayer.getUuid())).findFirst();
+        if (playerInPosition.isPresent()){
+            playerInPosition.get().setPosition(startPosition);
+            message += String.format("On %s there was %s, who is moved back to %s. ", newPosition, playerInPosition.get().getName(), startPosition);
+        }
+
 
         if (isGoose(currentPlayer.getPosition())) {
             startPosition = currentPlayer.getPosition();
