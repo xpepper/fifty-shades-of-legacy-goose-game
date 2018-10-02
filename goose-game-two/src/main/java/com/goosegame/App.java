@@ -112,7 +112,7 @@ public class App {
             newPosition = currentPlayer.getPosition() + firstThrow + secondThrow;
             currentPlayer.setPosition(newPosition);
             message = message.substring(0, message.length()-2);
-            message += String.format(", oca. %s moves from %s to %s. ", currentPlayer.getName(), cellName(startPosition), cellName(newPosition));
+            message += String.format(", goose. %s moves from %s to %s. ", currentPlayer.getName(), cellName(startPosition), cellName(newPosition));
         }
         if(currentPlayer.getPosition()> 63) {
             currentPlayer.setPosition(63 - (currentPlayer.getPosition() - 63));
