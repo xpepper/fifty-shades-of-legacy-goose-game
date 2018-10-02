@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import spark.Request;
 import spark.Response;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class App {
             return "{\"error\": \"name already taken: " + name + "\"}";
         } else {
             if (!moreThanFourPlayer()) {
-                players.add(new Player(name, value));
+                players.add(new Player(name, value)); // passare ad una versione che fa new Player(json) ?
                 if (players.size() == 4)
                     nextPlayer = players.getFirst();
 
@@ -101,6 +102,14 @@ public class App {
         newPosition = currentPlayer.getPosition() + firstThrow + secondThrow;
         currentPlayer.setPosition(newPosition);
         String message = String.format("%s moves from %s to %s. ", currentPlayer.getName(), cellName(startPosition), cellName(newPosition));
+
+        if (isGoose(currentPlayer.getPosition())) {
+            startPosition = currentPlayer.getPosition();
+            newPosition = currentPlayer.getPosition() + firstThrow + secondThrow;
+            currentPlayer.setPosition(newPosition);
+            message = message.substring(0, message.length()-2);
+            message += String.format(", oca. %s moves from %s to %s. ", currentPlayer.getName(), cellName(startPosition), cellName(newPosition));
+        }
         if(currentPlayer.getPosition()> 63) {
             currentPlayer.setPosition(63 - (currentPlayer.getPosition() - 63));
             message += String.format("%s bounced! %s goes back to %s", currentPlayer.getName(), currentPlayer.getName(), currentPlayer.getPosition());
@@ -115,6 +124,10 @@ public class App {
         }
 
         return "{\"roll\":" + printRoll(firstThrow, secondThrow) + ", \"position\":" + currentPlayer.getPosition() + ", \"message\": \"" + message.trim() + "\" }";
+    }
+
+    private boolean isGoose(int position) {
+        return Arrays.asList(5,14,23,9,18,27).contains(position);
     }
 
     private String printRoll(int firstThrow, int secondThrow) {
