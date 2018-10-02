@@ -1,5 +1,6 @@
 package com.goosegame;
 
+import com.sun.tools.javadoc.Start;
 import org.json.JSONObject;
 import spark.Request;
 import spark.Response;
@@ -105,7 +106,6 @@ public class App {
             message += String.format("On %s there was %s, who is moved back to %s. ", newPosition, playerInPosition.get().getName(), startPosition);
         }
 
-
         if (isGoose(currentPlayer.getPosition())) {
             startPosition = currentPlayer.getPosition();
             newPosition = currentPlayer.getPosition() + firstThrow + secondThrow;
@@ -141,7 +141,11 @@ public class App {
         return new Random().nextInt(5) + 1;
     }
 
-    private String cellName(int startPosition) {
-        return startPosition == 0? "Partenza" : String.valueOf(startPosition);
+    private String cellName(int position) {
+        if (position == 0)
+            return "Start";
+        if (position == 6)
+            return "The Bridge";
+        return String.valueOf(position);
     }
 }
