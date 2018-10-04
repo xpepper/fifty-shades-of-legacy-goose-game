@@ -1,6 +1,8 @@
 package com.goosegame;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 
@@ -8,6 +10,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class App {
+    private static Logger logger = LoggerFactory.getLogger(App.class);
+
     public LinkedList<Player> players = new LinkedList<Player>();
     private boolean gameOver = false;
     private Player nextPlayer = null;
@@ -24,6 +28,7 @@ public class App {
                 if (players.size() == 4)
                     nextPlayer = players.getFirst();
 
+                logger.info("{} just added to the game!", wannabePlayer);
                 res.status(201);
                 res.type("application/json");
                 return "{\"id\": \"" + wannabePlayer.getUuid() + "\", \"name\": \"" + wannabePlayer.getName() + "\"}";
@@ -62,7 +67,8 @@ public class App {
                 }
                 String movePlayer = movePlayer(player);
                 nextPlayer = players.get((players.indexOf(player) + 1 ) % players.size());
-                System.out.println("next player is " + nextPlayer);
+                logger.info("next player is {}", nextPlayer);
+
                 res.status(200);
                 return movePlayer;
             } catch (Exception e) {
@@ -125,6 +131,7 @@ public class App {
             gameOver = true;
         }
 
+        logger.info("{} moved", currentPlayer);
         return "{\"roll\":" + printRoll(firstThrow, secondThrow) + ", \"position\":" + currentPlayer.getPosition() + ", \"message\": \"" + message.trim() + "\" }";
     }
 
