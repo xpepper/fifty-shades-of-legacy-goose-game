@@ -7,9 +7,12 @@ import java.util.StringJoiner;
 import java.util.UUID;
 
 public class Player {
-    private final String name;
-    private final UUID uuid;
+    private String name;
+    private UUID uuid;
     private int position = 0;
+
+    public Player() {
+    }
 
     public Player(JSONObject json) {
         this.name = json.getString("name");
