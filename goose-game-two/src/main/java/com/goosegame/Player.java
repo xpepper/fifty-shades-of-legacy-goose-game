@@ -24,11 +24,6 @@ public class Player {
         return uuid;
     }
 
-    public Player(String name, UUID uuid) {
-        this.name = name;
-        this.uuid = uuid;
-    }
-
     public String getName() {
         return name;
     }
