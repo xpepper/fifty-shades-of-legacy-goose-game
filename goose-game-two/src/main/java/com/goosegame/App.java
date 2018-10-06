@@ -28,7 +28,7 @@ public class App {
                 if (players.size() == 4)
                     nextPlayer = players.getFirst();
 
-                logger.info("{} just added to the game!", wannabePlayer);
+                logger.info("{} joined the game!", wannabePlayer);
                 res.status(201);
                 res.type("application/json");
                 return "{\"id\": \"" + wannabePlayer.getUuid() + "\", \"name\": \"" + wannabePlayer.getName() + "\"}";
