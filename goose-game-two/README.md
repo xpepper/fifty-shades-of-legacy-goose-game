@@ -6,14 +6,14 @@ To add a new player to the game, send a POST request like this:
 
 `POST /players`
 
-with a JSON body like `{ "name": "Paolo"}`
+with a JSON body like `{ "name": "Paolo", "nickname": "gooser"}`
 
 And the response should be something like 
 
 `{"id": "95df85f8-e342-4420-8917-187d00870db5", "name": "Paolo"}`
 
 You can add up to four players.
-Players must have a unique name.
+Players must have a unique nickname.
 
 ### Playing the game
 
