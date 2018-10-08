@@ -1,5 +1,6 @@
 package com.goosegame;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,8 @@ import java.util.stream.Collectors;
 
 public class App {
     private static Logger logger = LoggerFactory.getLogger(App.class);
+
+    private final DiceRollerService diceRollerService = new DiceRollerService();
 
     public LinkedList<Player> players = new LinkedList<Player>();
     private boolean gameOver = false;
@@ -96,8 +99,9 @@ public class App {
     }
 
     private String movePlayer(Player currentPlayer) {
-        int firstThrow = thowDice();
-        int secondThrow = thowDice();
+        JSONArray roll = roll();
+        int firstThrow = roll.getJSONObject(0).getInt("value");
+        int secondThrow = roll.getJSONObject(1).getInt("value");
 
         int startPosition = 0, newPosition = 0;
         startPosition = currentPlayer.getPosition();
@@ -135,16 +139,17 @@ public class App {
         return "{\"roll\":" + printRoll(firstThrow, secondThrow) + ", \"position\":" + currentPlayer.getPosition() + ", \"message\": \"" + message.trim() + "\" }";
     }
 
+    private JSONArray roll() {
+        JSONObject jsonObject = diceRollerService.roll();
+        return jsonObject.getJSONArray("dice");
+    }
+
     private boolean isGoose(int position) {
         return Arrays.asList(5,14,23,9,18,27).contains(position);
     }
 
     private String printRoll(int firstThrow, int secondThrow) {
         return "[" +firstThrow + ", " + secondThrow + "]";
-    }
-
-    private int thowDice() {
-        return new Random().nextInt(5) + 1;
     }
 
     private String cellName(int position) {
