@@ -24,7 +24,7 @@ public class App {
         Player wannabePlayer = new Player(json);
         if (exist(wannabePlayer)) {
             res.status(400);
-            return "{\"error\": \"name already taken: " + wannabePlayer.getName() + "\"}";
+            return "{\"error\": \"nickname already taken: " + wannabePlayer.getNickname() + "\"}";
         } else {
             if (!moreThanFourPlayer()) {
                 players.add(wannabePlayer);
@@ -34,7 +34,9 @@ public class App {
                 logger.info("{} joined the game!", wannabePlayer);
                 res.status(201);
                 res.type("application/json");
-                return "{\"id\": \"" + wannabePlayer.getUuid() + "\", \"name\": \"" + wannabePlayer.getName() + "\"}";
+                return "{\"id\": \"" + wannabePlayer.getUuid()
+                        + "\", \"name\": \"" + wannabePlayer.getName()
+                        + "\", \"nickname\": \"" + wannabePlayer.getNickname() + "\"}";
             } else {
                 res.status(400);
                 return "{\"error\": \"too many players already: " + printNames(players) + "\"}";

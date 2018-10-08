@@ -58,6 +58,7 @@ public class Player {
     public String toString() {
         return new StringJoiner(", ", Player.class.getSimpleName() + "[", "]")
                 .add("name='" + name + "'")
+                .add("nickname='" + nickname + "'")
                 .add("uuid=" + uuid)
                 .add("position=" + position)
                 .toString();
