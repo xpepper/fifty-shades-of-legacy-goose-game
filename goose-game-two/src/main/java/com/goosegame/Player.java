@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public class Player {
     private String name;
+    private String nickname;
     private UUID uuid;
     private int position = 0;
 
@@ -16,6 +17,7 @@ public class Player {
 
     public Player(JSONObject json) {
         this.name = json.getString("name");
+        this.nickname = json.getString("nickname");
         this.uuid = UUID.randomUUID();
     }
 
@@ -33,6 +35,10 @@ public class Player {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     @Override
