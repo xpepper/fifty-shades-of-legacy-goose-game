@@ -15,8 +15,8 @@ public class main {
 
     public static void main(String[] args) {
         port(8080);
-        before((req, res) -> logger.info("Request: {} - body: {}", req.requestMethod(), req.body()));
-        after((req, res) -> logger.info("Response body: {}", res.body()));
+        before((req, res) -> logger.info("Request: {} {} - body: {}", req.requestMethod(), req.uri(), req.body()));
+        after((req, res) -> logger.info("Response {} - body: {}", res.status(), res.body()));
 
         post("/players", (req, res) -> app.createPlayer(req, res));
         post("/players/:id/roll", (req, res) -> app.roll(req, res));

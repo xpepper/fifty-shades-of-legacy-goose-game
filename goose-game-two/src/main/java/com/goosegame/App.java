@@ -52,6 +52,7 @@ public class App {
     }
 
     public String roll(Request req, Response res) {
+        res.type("application/json");
         if (!moreThanFourPlayer()) {
             res.status(400);
             return "{\"error\": \"Game not started, waiting for more players\"}";
@@ -75,8 +76,7 @@ public class App {
                 res.status(200);
                 return movePlayer;
             } catch (Exception e) {
-                System.out.println(e);
-                e.printStackTrace();
+                logger.error(e.getMessage());
                 res.status(400);
                 return "{\"error\": \"User rolling dice was not in game!\"}";
             }
