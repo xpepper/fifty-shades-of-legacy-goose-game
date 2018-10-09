@@ -1,7 +1,5 @@
 package com.goosegame;
 
-import org.json.JSONObject;
-
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.UUID;
@@ -15,9 +13,9 @@ public class Player {
     public Player() {
     }
 
-    public Player(JSONObject json) {
-        this.name = json.getString("name");
-        this.nickname = json.getString("nickname");
+    public Player(String name, String nickname) {
+        this.name = name;
+        this.nickname = nickname;
         this.uuid = UUID.randomUUID();
     }
 
@@ -39,6 +37,10 @@ public class Player {
 
     public String getNickname() {
         return nickname;
+    }
+
+    boolean hasNickname(String nickname) {
+        return getNickname().equals(nickname);
     }
 
     @Override

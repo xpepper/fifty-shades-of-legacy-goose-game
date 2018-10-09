@@ -13,8 +13,8 @@ public class DiceRollerService {
     private final OkHttpClient httpClient;
 
     public DiceRollerService() {
-        url = "http://roll.diceapi.com/json/d6/d6";
-        httpClient = new OkHttpClient();
+        this.url = "http://roll.diceapi.com/json/d6/d6";
+        this.httpClient = new OkHttpClient();
     }
 
     public JSONObject roll() {

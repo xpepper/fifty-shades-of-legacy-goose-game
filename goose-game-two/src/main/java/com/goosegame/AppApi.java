@@ -10,45 +10,38 @@ import spark.Response;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class App {
-    private static Logger logger = LoggerFactory.getLogger(App.class);
+public class AppApi {
 
+    private static Logger logger = LoggerFactory.getLogger(AppApi.class);
     private final DiceRollerService diceRollerService = new DiceRollerService();
 
-    public LinkedList<Player> players = new LinkedList<Player>();
+    private GooseGame gooseGame;
+
+    public LinkedList<Player> players;
     private boolean gameOver = false;
     private Player nextPlayer = null;
 
-    public String createPlayer(Request req, Response res) {
-        JSONObject json = new Utils().fromJson(req.body());
-        Player wannabePlayer = new Player(json);
-        if (exist(wannabePlayer)) {
-            res.status(400);
-            return "{\"error\": \"name already taken: " + wannabePlayer.getName() + "\"}";
-        } else {
-            if (!moreThanFourPlayer()) {
-                players.add(wannabePlayer);
-                if (players.size() == 4)
-                    nextPlayer = players.getFirst();
-
-                logger.info("{} joined the game!", wannabePlayer);
-                res.status(201);
-                res.type("application/json");
-                return "{\"id\": \"" + wannabePlayer.getUuid() + "\", \"name\": \"" + wannabePlayer.getName() + "\"}";
-            } else {
-                res.status(400);
-                return "{\"error\": \"too many players already: " + printNames(players) + "\"}";
-            }
-        }
+    public AppApi(GooseGame gooseGame) {
+        this.gooseGame = gooseGame;
+        this.players = gooseGame.players();
     }
 
-    private boolean exist(Player nickname) {
-        for (Player p : players) {
-            if (p.getNickname().equals(nickname)) {
-                return true;
-            }
+    public String createPlayer(Request req, Response res) {
+        Player player = playerFromRequest(req);
+        try {
+            gooseGame.addPlayer(player);
+            nextPlayer = gooseGame.firstPlayer();
+            res.status(201);
+            res.type("application/json");
+            logger.info("{} joined the game!", player);
+            return toJson(player);
+        } catch (GameFullException e) {
+            res.status(400);
+            return "{\"error\": \"too many players already: " + printNames(gooseGame.players()) + "\"}";
+        } catch (NickNameAlreadyTakenException e) {
+            res.status(400);
+            return "{\"error\": \"nickname already taken: " + player.getNickname() + "\"}";
         }
-        return false;
     }
 
     public String roll(Request req, Response res) {
@@ -158,5 +151,14 @@ public class App {
         if (position == 6)
             return "The Bridge";
         return String.valueOf(position);
+    }
+
+    private String toJson(Player player) {
+        return "{\"id\": \"" + player.getUuid() + "\", \"name\": \"" + player.getName() + "\"}";
+    }
+
+    private Player playerFromRequest(Request request) {
+        JSONObject json = new JSONObject(request.body());
+        return new Player(json.getString("name"), json.getString("nickname"));
     }
 }
