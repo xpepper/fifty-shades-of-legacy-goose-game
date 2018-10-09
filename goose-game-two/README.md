@@ -12,7 +12,7 @@ And the response should be something like
 
 `{"id": "95df85f8-e342-4420-8917-187d00870db5", "name": "Paolo", "nickname": "gooser"}`
 
-You can add up to four players.    
+Game starts when exactly four players join.
 Players must have a unique nickname.
 
 ### Playing the game
