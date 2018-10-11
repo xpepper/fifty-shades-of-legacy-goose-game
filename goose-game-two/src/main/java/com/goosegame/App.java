@@ -24,6 +24,7 @@ public class App {
         Player wannabePlayer = new Player(json);
         if (exist(wannabePlayer)) {
             res.status(400);
+            res.type("application/json");
             return "{\"error\": \"nickname already taken: " + wannabePlayer.getNickname() + "\"}";
         } else {
             if (!moreThanFourPlayer()) {
@@ -39,6 +40,7 @@ public class App {
                         + "\", \"nickname\": \"" + wannabePlayer.getNickname() + "\"}";
             } else {
                 res.status(400);
+                res.type("application/json");
                 return "{\"error\": \"too many players already: " + printNames(players) + "\"}";
             }
         }
