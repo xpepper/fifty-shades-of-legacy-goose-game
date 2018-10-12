@@ -29,3 +29,8 @@ The response will contain the roll result, your new position and a message, like
 
 `{"roll":[5, 4], "position":21, "message": "Paolo moves from 12 to 21." }`
 
+## TODO List
+
+1. [BUG] Fix the annoying bug that allow users with the same nickname to join the same game
+2. [FEATURE] Allow the game to start even with just two players
+3. Are there any other bugs we are not aware of?
