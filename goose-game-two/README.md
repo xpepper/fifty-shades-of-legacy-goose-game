@@ -29,6 +29,13 @@ The response will contain the roll result, your new position and a message, like
 
 `{"roll":[5, 4], "position":21, "message": "Paolo moves from 12 to 21." }`
 
+## Running the app
+In a shell, execute this command
+
+```bash
+mvn compile exec:java -Dexec.mainClass=com.goosegame.main
+```
+
 ## TODO List
 
 1. [BUG] Fix the annoying bug that allow users with the same nickname to join the same game
