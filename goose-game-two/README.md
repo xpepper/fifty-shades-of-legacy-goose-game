@@ -33,7 +33,7 @@ The response will contain the roll result, your new position and a message, like
 In a shell, execute this command
 
 ```bash
-mvn compile exec:java -Dexec.mainClass=com.goosegame.main
+mvn compile exec:java -Dexec.mainClass=com.goosegame.GooseGameBoot
 ```
 
 ## TODO List

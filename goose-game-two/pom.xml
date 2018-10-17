@@ -34,7 +34,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.goosegame.main</mainClass>
+                                    <mainClass>com.goosegame.GooseGameBoot</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
@@ -66,6 +66,24 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>3.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>3.1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.15.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
