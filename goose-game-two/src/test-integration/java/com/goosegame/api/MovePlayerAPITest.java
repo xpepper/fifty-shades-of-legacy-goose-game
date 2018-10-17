@@ -1,5 +1,6 @@
-package com.goosegame;
+package com.goosegame.api;
 
+import com.goosegame.GooseGameApp;
 import io.restassured.response.ValidatableResponse;
 import org.json.JSONObject;
 import org.junit.After;
