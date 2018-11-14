@@ -5,7 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import spark.routematch.RouteMatch;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -62,6 +65,40 @@ public class AppTest {
         String response = addPlayer("William", "laggard");
         assertEquals(400, fakeResponse.getStatus());
         assertEquals("too many players already: Piero, Paolo, Samantha, Scott", new JSONObject(response).getString("error"));
+    }
+
+    @Test
+    public void play_a_full_game() {
+        List<String> players = new ArrayList();
+
+        String response = addPlayer("Piero", "Gooser");
+        players.add(playerIdFrom(response));
+
+        response = addPlayer("Paolo", "Looser");
+        players.add(playerIdFrom(response));
+
+        response = addPlayer("Samantha", "FancyGamer");
+        players.add(playerIdFrom(response));
+
+        response = addPlayer("Scott", "WinnieThePooh");
+        players.add(playerIdFrom(response));
+
+        int position = 0;
+        do {
+            for (int i = 0; i < 4; i++) {
+                String playerId = players.get(i);
+                RouteMatch routeMatch = new RouteMatch(this, "/players/:id/roll", "players/" + playerId + "/roll", "*/*");
+                String rollResult = app.roll(create(routeMatch, fakeRequest), create(fakeResponse));
+
+                System.out.println(rollResult);
+                position = new JSONObject(rollResult).getInt("position");
+                if (position == 63) break;
+            }
+        } while (position != 63);
+    }
+
+    private String playerIdFrom(String response) {
+        return new JSONObject(response).getString("id");
     }
 
     private String addPlayer(String name, String nickname) {
