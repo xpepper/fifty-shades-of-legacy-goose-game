@@ -9,7 +9,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static spark.RequestResponseFactory.create;
 
 public class AppTest {
@@ -44,6 +43,25 @@ public class AppTest {
 
         assertEquals(400, fakeResponse.getStatus());
         assertEquals("nickname already taken: Gooser", new JSONObject(response).getString("error"));
+    }
+
+    @Test
+    public void cannot_add_more_than_four_players_to_the_same_game() {
+        addPlayer("Piero", "Gooser");
+        assertEquals(201, fakeResponse.getStatus());
+
+        addPlayer("Paolo", "Looser");
+        assertEquals(201, fakeResponse.getStatus());
+
+        addPlayer("Samantha", "FancyGamer");
+        assertEquals(201, fakeResponse.getStatus());
+
+        addPlayer("Scott", "WinnieThePooh");
+        assertEquals(201, fakeResponse.getStatus());
+
+        String response = addPlayer("William", "laggard");
+        assertEquals(400, fakeResponse.getStatus());
+        assertEquals("too many players already: Piero, Paolo, Samantha, Scott", new JSONObject(response).getString("error"));
     }
 
     private String addPlayer(String name, String nickname) {
