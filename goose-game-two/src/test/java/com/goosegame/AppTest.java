@@ -5,12 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import spark.Request;
-import spark.Response;
 
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static spark.RequestResponseFactory.create;
 
 public class AppTest {
@@ -38,7 +37,7 @@ public class AppTest {
     }
 
     @Test //this is a BUG!
-    public void can_add_existing_player_twice() {
+    public void can_add_player_with_same_nickname_twice() {
         addPlayer("Piero", "Gooser");
         assertEquals(201, fakeResponse.getStatus());
 
@@ -48,9 +47,9 @@ public class AppTest {
 
     private String addPlayer(String name, String nickname) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", name);
-        jsonObject.put("nickname", nickname);
+        jsonObject.put("name", name).put("nickname", nickname);
         fakeRequest.setContent(jsonObject.toString().getBytes());
+
         return app.createPlayer(create(fakeRequest), create(fakeResponse));
     }
 }
