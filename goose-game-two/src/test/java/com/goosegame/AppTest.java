@@ -39,10 +39,11 @@ public class AppTest {
     @Test
     public void forbid_player_with_same_nickname_to_join() {
         addPlayer("Piero", "Gooser");
-        assertEquals(201, fakeResponse.getStatus());
 
-        addPlayer("Piero", "Gooser");
+        String response = addPlayer("Piero", "Gooser");
+
         assertEquals(400, fakeResponse.getStatus());
+        assertEquals("nickname already taken: Gooser", new JSONObject(response).getString("error"));
     }
 
     private String addPlayer(String name, String nickname) {
