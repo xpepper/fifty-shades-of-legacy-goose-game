@@ -46,9 +46,9 @@ public class App {
         }
     }
 
-    private boolean exist(Player nickname) {
+    private boolean exist(Player player) {
         for (Player p : players) {
-            if (p.getNickname().equals(nickname)) {
+            if (p.getNickname().equals(player.getNickname())) {
                 return true;
             }
         }

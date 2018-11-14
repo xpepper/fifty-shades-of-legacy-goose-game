@@ -36,13 +36,13 @@ public class AppTest {
         assertEquals(4, UUID.fromString(jsonResponse.getString("id")).version());
     }
 
-    @Test //this is a BUG!
-    public void can_add_player_with_same_nickname_twice() {
+    @Test
+    public void forbid_player_with_same_nickname_to_join() {
         addPlayer("Piero", "Gooser");
         assertEquals(201, fakeResponse.getStatus());
 
         addPlayer("Piero", "Gooser");
-        assertEquals(201, fakeResponse.getStatus());
+        assertEquals(400, fakeResponse.getStatus());
     }
 
     private String addPlayer(String name, String nickname) {
