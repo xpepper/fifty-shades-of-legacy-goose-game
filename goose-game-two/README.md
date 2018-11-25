@@ -41,3 +41,4 @@ mvn compile exec:java -Dexec.mainClass=com.goosegame.main
 1. [BUG] Fix the annoying bug that allow users with the same nickname to join the same game
 2. [FEATURE] Allow the game to start even with just two players
 3. Are there any other bugs we are not aware of?
+4. [NEW FEATURE REQUEST] The first player has a higher probability to win, and that's not fair. The business ask to shuffle the order of the players before starting the game.
