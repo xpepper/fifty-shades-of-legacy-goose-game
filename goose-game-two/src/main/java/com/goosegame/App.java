@@ -23,10 +23,12 @@ public class App {
         JSONObject json = new Utils().fromJson(req.body());
         Player wannabePlayer = new Player(json);
         if (exist(wannabePlayer)) {
+            // player name already taken
             res.status(400);
             res.type("application/json");
             return "{\"error\": \"nickname already taken: " + wannabePlayer.getNickname() + "\"}";
         } else {
+            // check to see if we can add one more player...
             if (!moreThanFourPlayer()) {
                 players.add(wannabePlayer);
                 if (players.size() == 4)
@@ -39,6 +41,7 @@ public class App {
                         + "\", \"name\": \"" + wannabePlayer.getName()
                         + "\", \"nickname\": \"" + wannabePlayer.getNickname() + "\"}";
             } else {
+                // ...no! Too much players already in the game.
                 res.status(400);
                 res.type("application/json");
                 return "{\"error\": \"too many players already: " + printNames(players) + "\"}";
@@ -114,12 +117,12 @@ public class App {
         String message = String.format("%s moves from %s to %s. ", currentPlayer.getName(), cellName(startPosition), cellName(newPosition));
 
         Optional<Player> playerInPosition = players.stream().filter(p -> p.getPosition() == currentPlayer.getPosition() && !p.getUuid().equals(currentPlayer.getUuid())).findFirst();
-        if (playerInPosition.isPresent()){
+        if(playerInPosition.isPresent()){
             playerInPosition.get().setPosition(startPosition);
             message += String.format("On %s there was %s, who is moved back to %s. ", newPosition, playerInPosition.get().getName(), startPosition);
         }
 
-        if (isGoose(currentPlayer.getPosition())) {
+        if(isGoose(currentPlayer.getPosition())) {
             startPosition = currentPlayer.getPosition();
             newPosition = currentPlayer.getPosition() + firstThrow + secondThrow;
             currentPlayer.setPosition(newPosition);
