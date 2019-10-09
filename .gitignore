@@ -1,3 +1,5 @@
 target/
 
 .idea
+.iml
+goose-game-two.iml
